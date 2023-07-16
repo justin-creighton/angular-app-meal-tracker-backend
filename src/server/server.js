@@ -3,12 +3,15 @@ dotenv.config();
 import express from 'express';
 import { routes } from '../routes';
 import { db } from '../db/';
+import bodyParser from 'body-parser';
 
 const app = express();
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 const port = process.env.SERVER_PORT;
 
 routes.forEach((route) => {
-  app[route.method](route.path, route.handler);
+  app[route.method](`/api${route.path}`, route.handler);
 });
 
 const start = async () => {
