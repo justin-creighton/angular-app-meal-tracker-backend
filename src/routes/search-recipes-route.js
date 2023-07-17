@@ -1,7 +1,12 @@
+import { searchRecipes } from '../db';
+
 export const searchRecipesRoute = {
   path: '/recipes',
   method: 'get',
   handler: async (req, res) => {
-    res.send('Getting recipes (not implemented yet)');
+    const searchString = req.query.search;
+    const results = await searchRecipes(searchString);
+    res.status(200);
+    res.json(results);
   },
 };
